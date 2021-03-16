@@ -1,3 +1,7 @@
+# Pre requisites
+1. Access https://shell.azure.com
+1. Change shell type to Powershell
+
 # Creating a web app with Azure command-line interface (CLI) 
 
 ## generate a unique name and store as a shell variable
