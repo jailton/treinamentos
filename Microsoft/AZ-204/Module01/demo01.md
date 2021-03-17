@@ -1,6 +1,7 @@
-# Pre requisites
+# Prerequisites
+
 1. Access https://shell.azure.com
-1. Change shell type to Powershell
+1. Change shell type to Bash
 
 # Creating a web app with Azure command-line interface (CLI) 
 

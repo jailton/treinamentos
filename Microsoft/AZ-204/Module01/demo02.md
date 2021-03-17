@@ -25,7 +25,7 @@ $location="West Europe"
 New-AzResourceGroup -Name myResourceGroup -Location $location
 ```
 
-# Create new App Service plan
+## Create new App Service plan
 
 ```
 New-AzAppServicePlan -Name $webappname -Location $location -ResourceGroupName myResourceGroup -Tier Free
