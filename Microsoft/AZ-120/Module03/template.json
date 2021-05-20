@@ -1,0 +1,359 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "vmCount": {
+      "type": "int",
+      "defaultValue": 2
+    },
+    "location": {
+      "type": "string"
+    },
+    "proximitytPlacementGrouName": {
+      "type": "string"
+    },
+    "availabilitySetsName": {
+      "type": "string",
+      "metadata": {
+        "description": "The full resource name of the Availability set resource."
+      }
+    },
+    "availabilitySetsFaultDomainCount": {
+      "type": "int",
+      "metadata": {
+        "description": "The number of fault domains to use."
+      }
+    },
+    "availabilitySetsUpdateDomainCount": {
+      "type": "int",
+      "metadata": {
+        "description": "The number of update domains to use."
+      }
+    },
+    "availabilitySetsSkuName": {
+      "type": "string",
+      "metadata": {
+        "description": "Sku of the availability set, only name is required to be set. See AvailabilitySetSkuTypes for possible set of values. Use 'Aligned' for virtual machines with managed disks and 'Classic' for virtual machines with unmanaged disks. Default value is 'Classic'."
+      }
+    },
+    "virtualNetworkName": {
+      "type": "string"
+    },
+    "virtualNetworksExtendedLocation": {
+      "type": "object"
+    },
+    "virtualNetworkDdosProtectionPlanEnabled": {
+      "type": "bool"
+    },
+    "publicIpAddressName": {
+      "type": "string"
+    },
+    "publicIpAddressType": {
+      "type": "string"
+    },
+    "publicIpAddressSku": {
+      "type": "string"
+    },
+    "networkSecurityGroupName": {
+      "type": "string"
+    },
+    "networkSecurityGroupRules": {
+      "type": "array"
+    },
+    "networkInterfaceName": {
+      "type": "string"
+    },
+    "enableAcceleratedNetworking": {
+      "type": "bool"
+    },
+    "subnetName": {
+      "type": "string"
+    },
+    "dataDiskResources": {
+      "type": "array"
+    },
+    "virtualMachineName": {
+      "type": "string"
+    },
+    "virtualMachineSize": {
+      "type": "string"
+    },
+    "osDiskType": {
+      "type": "string"
+    },
+    "dataDisks": {
+      "type": "array"
+    },
+    "adminUsername": {
+      "type": "string"
+    },
+    "adminPassword": {
+      "type": "secureString"
+    },
+    "_artifactsLocationSasToken": {
+      "defaultValue": "",
+      "type": "securestring",
+      "metadata": {
+        "description": "The sasToken required to access _artifactsLocation.  When the template is deployed using the accompanying scripts, a sasToken will be automatically generated."
+      }
+    },
+    "_artifactsLocation": {
+      "defaultValue": "https://raw.githubusercontent.com/jailton/treinamentos/master/Microsoft/AZ-120/Module03/",
+      "type": "string",
+      "metadata": {
+        "description": "The base URI where artifacts required by this template are located. When the template is deployed using the accompanying scripts, a private location in the subscription will be used and this value will be automatically generated."
+      }
+    },
+    "commandToExecute": {
+      "type": "string",
+      "metadata": {
+        "description": "The command to execute."
+      }
+    }
+  },
+
+  "variables": {
+    "vnetId": "[resourceId(resourceGroup().name, 'Microsoft.Network/VirtualNetworks', parameters('virtualNetworkName'))]",
+    "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]"
+  },
+
+  "resources": [
+    {
+      "type": "Microsoft.Compute/proximityPlacementGroups",
+      "name": "[parameters('proximitytPlacementGrouName')]",
+      "apiVersion": "2019-03-01",
+      "location": "[parameters('location')]",
+      "tags": {}
+    },
+    {
+      "type": "Microsoft.Compute/availabilitySets",
+      "name": "[parameters('availabilitySetsName')]",
+      "apiVersion": "2019-07-01",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Compute/proximityPlacementGroups', parameters('proximitytPlacementGrouName'))]"
+      ],
+      "properties": {
+        "platformFaultDomainCount": "[parameters('availabilitySetsFaultDomainCount')]",
+        "platformUpdateDomainCount": "[parameters('availabilitySetsUpdateDomainCount')]",
+        "proximityPlacementGroup": {
+          "id": "[resourceId('Microsoft.Compute/proximityPlacementGroups', parameters('proximitytPlacementGrouName'))]"
+        }
+      },
+      "sku": {
+        "name": "[parameters('availabilitySetsSkuName')]"
+      },
+      "tags": {}
+    },
+    {
+      "name": "[parameters('virtualNetworkName')]",
+      "type": "Microsoft.Network/VirtualNetworks",
+      "apiVersion": "2020-06-01",
+      "location": "[parameters('location')]",
+      "extendedLocation": "[if(empty(parameters('virtualNetworksExtendedLocation')), json('null'), parameters('virtualNetworksExtendedLocation'))]",
+      "dependsOn": [],
+      "tags": {},
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "192.168.0.0/16"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "default",
+            "properties": {
+              "addressPrefix": "192.168.0.0/24"
+            }
+          }
+        ],
+        "enableDdosProtection": "[parameters('virtualNetworkDdosProtectionPlanEnabled')]"
+      }
+    },
+    {
+      "type": "Microsoft.Network/publicIpAddresses",
+      "name": "[concat(parameters('publicIpAddressName'), copyIndex())]",
+      "apiVersion": "2019-02-01",
+      "location": "[parameters('location')]",
+      "properties": {
+        "publicIpAllocationMethod": "[parameters('publicIpAddressType')]"
+      },
+      "sku": {
+        "name": "[parameters('publicIpAddressSku')]"
+      },
+      "copy": {
+        "name": "publicIpCopy",
+        "count": "[parameters('vmCount')]"
+      }
+    },
+    {
+      "name": "[concat(parameters('networkSecurityGroupName'), copyIndex())]",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "apiVersion": "2019-02-01",
+      "location": "[parameters('location')]",
+      "properties": {
+        "securityRules": "[parameters('networkSecurityGroupRules')]"
+      },
+      "copy": {
+        "name": "networkSecurityGroupNameCopy",
+        "count": "[parameters('vmCount')]"
+      }
+    },
+    {
+      "name": "[concat(parameters('networkInterfaceName'), copyIndex())]",
+      "type": "Microsoft.Network/networkInterfaces",
+      "apiVersion": "2018-10-01",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/networkSecurityGroups/', concat(parameters('networkSecurityGroupName'), copyIndex()))]",
+        "[concat('Microsoft.Network/publicIpAddresses/', concat(parameters('publicIpAddressName'), copyIndex()))]"
+      ],
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "subnet": {
+                "id": "[variables('subnetRef')]"
+              },
+              "privateIPAllocationMethod": "Dynamic",
+              "publicIpAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIpAddresses', concat(parameters('publicIpAddressName'), copyIndex()))]"
+              }
+            }
+          }
+        ],
+        "enableAcceleratedNetworking": "[parameters('enableAcceleratedNetworking')]",
+        "networkSecurityGroup": {
+          "id": "[resourceId(resourceGroup().name, 'Microsoft.Network/networkSecurityGroups', concat(parameters('networkSecurityGroupName'), copyIndex()))]"
+        }
+      },
+      "copy": {
+        "name": "networkInterfaceNameCopy",
+        "count": "[parameters('vmCount')]"
+      }
+
+    },
+    {
+      "name": "[parameters('dataDiskResources')[copyIndex()].name]",
+      "type": "Microsoft.Compute/disks",
+      "apiVersion": "2020-09-30",
+      "location": "[parameters('location')]",
+      "properties": "[parameters('dataDiskResources')[copyIndex()].properties]",
+      "sku": {
+        "name": "[parameters('dataDiskResources')[copyIndex()].sku]"
+      },
+      "copy": {
+        "name": "managedDiskResources",
+        "count": "[length(parameters('dataDiskResources'))]"
+      }
+    },
+    {
+      "name": "[concat(parameters('virtualMachineName'), copyIndex())]",
+      "type": "Microsoft.Compute/virtualMachines",
+      "apiVersion": "2021-03-01",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "managedDiskResources",
+        "[concat('Microsoft.Network/networkInterfaces/', concat(parameters('networkInterfaceName'), copyIndex()))]"
+      ],
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[parameters('virtualMachineSize')]"
+        },
+        "storageProfile": {
+          "osDisk": {
+            "createOption": "fromImage",
+            "managedDisk": {
+              "storageAccountType": "[parameters('osDiskType')]"
+            }
+          },
+          "imageReference": {
+            "publisher": "suse",
+            "offer": "sles-sap-12-sp5-byos",
+            "sku": "gen1",
+            "version": "latest"
+          },
+          "copy": [
+            {
+              "name": "dataDisks",
+              "count": "[length(parameters('dataDisks'))]",
+              "input": {
+                "lun": "[parameters('dataDisks')[copyIndex('dataDisks')].lun]",
+                "createOption": "[parameters('dataDisks')[copyIndex('dataDisks')].createOption]",
+                "caching": "[parameters('dataDisks')[copyIndex('dataDisks')].caching]",
+                "diskSizeGB": "[parameters('dataDisks')[copyIndex('dataDisks')].diskSizeGB]",
+                "managedDisk": {
+                  "id": "[coalesce(parameters('dataDisks')[copyIndex('dataDisks')].id,
+                      if(equals(concat(parameters('dataDisks')[copyIndex('dataDisks')].name, copyIndex()), json('null')), json('null'),
+                      resourceId('Microsoft.Compute/disks', concat(parameters('dataDisks')[copyIndex('dataDisks')].name, copyIndex()))))]",
+                  "storageAccountType": "[parameters('dataDisks')[copyIndex('dataDisks')].storageAccountType]"
+                },
+                "writeAcceleratorEnabled": "[parameters('dataDisks')[copyIndex('dataDisks')].writeAcceleratorEnabled]"
+              }
+            }
+          ]
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId(resourceGroup().name, 'Microsoft.Network/networkInterfaces', concat(parameters('networkInterfaceName'), copyIndex()))]"
+            }
+          ]
+        },
+        "osProfile": {
+          "computerName": "[concat(parameters('virtualMachineName'), copyIndex())]",
+          "adminUsername": "[parameters('adminUsername')]",
+          "adminPassword": "[parameters('adminPassword')]",
+          "linuxConfiguration": {
+            "patchSettings": {
+              "patchMode": "ImageDefault"
+            }
+          }
+        },
+        "proximityPlacementGroup": {
+          "id": "[resourceId('Microsoft.Compute/proximityPlacementGroups', parameters('proximitytPlacementGrouName'))]"
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": true
+          }
+        },
+        "availabilitySet": {
+          "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySetsName'))]"
+        }
+      },
+      "copy": {
+        "name": "virtualMachineNameCopy",
+        "count": "[parameters('vmCount')]"
+      }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('virtualMachineName'), copyIndex(),'/installcustomscript')]",
+      "apiVersion": "2015-05-01-preview",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Compute/virtualMachines/', concat(parameters('virtualMachineName'), copyIndex()))]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Azure.Extensions",
+        "type": "CustomScript",
+        "typeHandlerVersion": "2.0",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "fileUris": [
+            "[uri(parameters('_artifactsLocation'), concat('create-filesytems.sh', parameters('_artifactsLocationSasToken')))]"
+          ],
+          "commandToExecute": "[parameters('commandToExecute')]"
+        }
+      },
+      "copy": {
+        "name": "extensionsCopy",
+        "count": "[parameters('vmCount')]"
+      }
+
+    }
+  ],
+  "outputs": {}
+}
