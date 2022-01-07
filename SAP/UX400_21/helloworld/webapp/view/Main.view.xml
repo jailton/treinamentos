@@ -1,0 +1,14 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="student00.sap.training.helloworld.controller.Main" displayBlock="true">
+    <Shell id="shell">
+        <App id="app">
+            <pages>
+                <Page id="page" title="{i18n>title}">
+                    <content>
+                        <Text xmlns="sap.m" text="Hello, World!" id="text2"/>
+                        <Button id="_IDGenButton1" text="Click here!" press="clicou"/>
+                    </content>
+                </Page>
+            </pages>
+        </App>
+    </Shell>
+</mvc:View>

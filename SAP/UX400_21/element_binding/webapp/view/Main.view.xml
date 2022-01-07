@@ -1,0 +1,61 @@
+<mvc:View
+    controllerName="student00.sap.training.elementbinding.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+>
+    <Shell id="shell">
+        <App id="app">
+            <pages>
+                <Page id="page" title="{i18n>title}">
+                    <content>
+                    <!--
+                        	"data": [{
+                                "carrier": {
+                                    "carrId": "LH",
+                                    "carrName": "Lufthansa",
+                                    "currCode": "EUR",
+                                    "url": "http://www.lufthansa.com"
+                                }
+                    -->
+                        <Table id="_IDGenTable1" items="{/data}" headerText="Carriers" mode="SingleSelectMaster" 
+                                selectionChange="onCarrierSelectionChange">
+                            <columns>
+                                <Column id="_IDGenColumn1"><header><Text id="_IDGenText1" text="Id"/></header></Column>
+                                <Column id="_IDGenColumn2"><header><Text id="_IDGenText2" text="Carrier Name"/></header></Column>
+                                <Column id="_IDGenColumn3"><header><Text id="_IDGenText3" text="Currency"/></header></Column>
+                                <Column id="_IDGenColumn4"><header><Text id="_IDGenText4" text="Url"/></header></Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem id="_IDGenColumnListItem1">
+                                    <cells>
+                                        <Text id="_IDGenText5" text="{carrier/carrId}" />
+                                        <Text id="_IDGenText6" text="{carrier/carrName}" />
+                                        <Text id="_IDGenText7" text="{carrier/currCode}" />
+                                        <Text id="_IDGenText8" text="{carrier/url}" />
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                        <Table id="idConnTable" items="{connections}" headerText="Flight Connections">
+                            <columns>
+                                <Column id="_IDGenColumn5"><header><Text id="_IDGenText9" text="Connection ID"/></header></Column>
+                                <Column id="_IDGenColumn6"><header><Text id="_IDGenText10" text="City From"/></header></Column>
+                                <Column id="_IDGenColumn7"><header><Text id="_IDGenText11" text="City To"/></header></Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem id="_IDGenColumnListItem2">
+                                    <cells>
+                                        <Text id="_IDGenText12" text="{connId}" />
+                                        <Text id="_IDGenText13" text="{cityFrom}" />
+                                        <Text id="_IDGenText14" text="{cityTo}" />
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </content>
+                </Page>
+            </pages>
+        </App>
+    </Shell>
+</mvc:View>

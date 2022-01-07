@@ -1,0 +1,65 @@
+<mvc:View
+    controllerName="student00.sap.training.aggregationbinding.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+>
+    <Shell id="shell">
+        <App id="app">
+            <pages>
+                <Page id="page" title="{i18n>title}">
+                    <content>
+                        <Carousel id="idCarousel1" pages="{connections>/data}">
+                            <pages>
+                                <f:SimpleForm id="idSimpleForm1">
+                                    <f:content>
+                                        <Label id="_IDGenLabel1" text="Carrier" />
+                                        <Text id="_IDGenText1"   text="{connections>carrId}" />
+                                        <Label id="_IDGenLabel2" text="Flight Number" />
+                                        <Text id="_IDGenText2"   text="{connections>connId}" />
+                                        <Label id="_IDGenLabel3" text="Departure" />
+                                        <Text id="_IDGenText3"   text="{connections>cityFrom}" />
+                                        <Label id="_IDGenLabel4" text="Destination" />
+                                        <Text id="_IDGenText4"   text="{connections>cityTo}" />
+                                    </f:content>
+                                </f:SimpleForm>
+                            </pages>
+                        </Carousel>
+                        <List id="idList1" items="{connections>/data}">
+                            <items>
+                                <StandardListItem id="idStandardListItem1" 
+                                    title="{connections>carrId} {connections>connId}" 
+                                    description="{connections>cityFrom} to {connections>cityTo}"/>
+                            </items>
+                        </List>
+                        <Table id="table1" items="{connections>/data}">
+                            <columns>
+                                <Column id="_IDGenColumn1">
+                                    <Text id="_IDGenText5" text="Carrier"/>
+                                </Column>
+                                <Column id="_IDGenColumn2">
+                                    <Text id="_IDGenText6" text="Flight Number"/>
+                                </Column>
+                                <Column id="_IDGenColumn3">
+                                    <Text id="_IDGenText7" text="Departure"/>
+                                </Column>
+                                <Column id="_IDGenColumn4">
+                                    <Text id="_IDGenText8" text="Destination"/>
+                                </Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem id="_IDGenColumnListItem1" >
+                                    <Text id="_IDGenText9" text="{connections>carrId}"/>
+                                    <Text id="_IDGenText10" text="{connections>connId}"/>
+                                    <Text id="_IDGenText11" text="{connections>cityFrom}"/>
+                                    <Text id="_IDGenText12" text="{connections>cityTo}"/>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </content>
+                </Page>
+            </pages>
+        </App>
+    </Shell>
+</mvc:View>

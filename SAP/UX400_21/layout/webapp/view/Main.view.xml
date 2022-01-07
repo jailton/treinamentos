@@ -1,0 +1,58 @@
+<mvc:View
+    controllerName="student00.sap.training.layout.controller.Main"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:l="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+    displayBlock="true"
+>
+    <Shell id="shell">
+        <App id="app">
+            <pages>
+                <Page id="page" title="{i18n>title}">
+                    <content>
+                        <Panel id="_IDGenPanel1"
+                            headerText="Panel with SimpleForm"
+                            class="sapUiResponsiveContentPadding">
+                            <content>
+                                <f:SimpleForm id="_IDGenSimpleForm1" 
+                                            layout="ResponsiveGridLayout">
+                                    <f:content>
+                                        <Image id="_IDGenImage1" src="img/plane.png"
+                                                width="100%"
+                                                class="sapUiHideOnPhone"/>
+                                        <core:Title id="_IDGenTitle1" text="Key of flight connection" />
+                                        <Label id="_IDGenLabel1" text="Carrier">
+                                            <layoutData>git
+                                                <l:GridData id="_IDGenGridData1" span="L2 M4 S12"/>
+                                            </layoutData>
+                                        </Label>
+                                        <Input id="_IDGenInput1">
+                                            <layoutData>
+                                                <l:GridData id="_IDGenGridData2" span="L10 M8 S12"/>
+                                            </layoutData>
+                                        </Input>
+                                        <Label id="_IDGenLabel2" text="Flight Number">
+                                            <layoutData>
+                                                <l:GridData id="_IDGenGridData3" span="L2 M4 S12"/>
+                                            </layoutData>                                        
+                                        </Label>
+                                        <Button id="_IDGenButton1" text="Submit">
+                                            <layoutData>
+                                                <l:GridData id="_IDGenGridData4" span="L10 M8 S12"/>
+                                            </layoutData>                                        
+                                        </Button>
+                                    </f:content>
+                                    <f:title>
+                                        <core:Title id="_IDGenTitle2" text="SimpleForm with ResponsiveGridLayout" />
+                                    </f:title>
+                                </f:SimpleForm>
+                            </content>
+                        </Panel>
+                    </content>
+                </Page>
+            </pages>
+        </App>
+    </Shell>
+</mvc:View>

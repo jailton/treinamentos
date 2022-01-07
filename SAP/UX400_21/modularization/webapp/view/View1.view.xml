@@ -1,0 +1,15 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="student00.sap.training.modularization.controller.View1" displayBlock="true">
+    <Shell id="shell">
+        <App id="app">
+            <pages>
+                <Page id="page" title="{i18n>title}"> <!-- Binding -->
+                    <content>
+                        <Text id="_IDGenText1" text="{device>/os/name}"/>
+                        <Text id="_IDGenText2" text="{device>/support/touch}"/>
+                        <Button xmlns="sap.m" text="{i18n>buttonText}" id="button0" press="onPressMe"/>
+                    </content>
+                </Page>
+            </pages>
+        </App>
+    </Shell>
+</mvc:View>
