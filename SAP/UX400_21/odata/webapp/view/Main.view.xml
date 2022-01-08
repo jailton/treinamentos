@@ -1,0 +1,104 @@
+<mvc:View
+    controllerName="student00.sap.training.odata.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns:core="sap.ui.core"
+    xmlns:t="sap.ui.table"
+    xmlns="sap.m"
+>
+
+    <t:Table id="_IDGenTable1" rows="{/UX_C_Flight_TP}" 
+            selectionMode="Single" 
+            visibleRowCount="5" 
+            selectionBehavior="Row"
+            rowSelectionChange="onFlightChange"
+            title="Flights">
+        <t:columns>
+            <t:Column id="_IDGenColumn1">
+                <t:label><Label id="_IDGenLabel1" text="Carrier"/></t:label>
+                <t:template><Text id="_IDGenText1" text="{Carrid}"/></t:template>
+            </t:Column>
+            <t:Column id="_IDGenColumn2">
+                <t:label><Label id="_IDGenLabel2" text="Flight Number"/></t:label>
+                <t:template><Text id="_IDGenText2" text="{Connid}"/></t:template>
+            </t:Column>
+            <t:Column id="_IDGenColumn3">
+                <t:label><Label id="_IDGenLabel3" text="Flight Date"/></t:label>
+                <t:template>
+                    <Text id="_IDGenText3" text="{path: 'Fldate', type: 'sap.ui.model.type.Date'}"/>
+                </t:template>
+            </t:Column>
+            <t:Column id="_IDGenColumn4">
+                <t:label><Label id="_IDGenLabel4" text="Number of Seats"/></t:label>
+                <t:template><Text id="_IDGenText4" text="{Seatsmax}"/></t:template>
+            </t:Column>
+            <t:Column id="_IDGenColumn5">
+                <t:label><Label id="_IDGenLabel5" text="Number of occupied seats"/></t:label>
+                <t:template><Text id="_IDGenText5" text="{Seatsocc}"/></t:template>
+            </t:Column>
+            <t:Column id="_IDGenColumn6">
+                <t:label><Label id="_IDGenLabel6" text="Action" /></t:label>
+                <t:template>
+                    <core:Icon id="_IDGenIcon1" press="onCreateBooking" src="sap-icon://create" tooltip="Create Booking">
+                        <core:customData>
+                            <core:CustomData key="Carrid" value="{Carrid}" />
+                            <core:CustomData key="Connid" value="{Connid}" />
+                            <core:CustomData key="Fldate" value="{Fldate}" />
+                        </core:customData>
+                    </core:Icon>
+                </t:template>
+            </t:Column>
+        </t:columns>
+    </t:Table>
+
+    <!-- Booking Table Data -->
+    <t:Table id="idBookingTable" 
+            rows="{to_Booking}" 
+            selectionBehavior="Row"
+            selectionMode="Single" 
+            title="Bookings"
+            visibleRowCount="10">
+        <t:columns>
+            <t:Column id="_IDGenColumn7">
+                <t:label><Label id="_IDGenLabel7" text="Carrier"/></t:label>
+                <t:template><Text id="_IDGenText6" text="{Carrid}"/></t:template>
+             </t:Column>
+            <t:Column id="_IDGenColumn8">
+                <t:label><Label id="_IDGenLabel8" text="Connection ID"/></t:label>
+                <t:template><Text id="_IDGenText7" text="{Connid}"/></t:template>
+             </t:Column>
+            <t:Column id="_IDGenColumn9">
+                <t:label><Label id="_IDGenLabel9" text="Flight Date"/></t:label>
+                <t:template><Text id="_IDGenText8" text="{ path: 'Fldate', type:'sap.ui.model.type.Date'}"/></t:template>
+             </t:Column>
+            <t:Column id="_IDGenColumn10">
+                <t:label><Label id="_IDGenLabel10" text="Booking ID"/></t:label>
+                <t:template><Text id="_IDGenText9" text="{Bookid}"/></t:template>
+             </t:Column>
+            <t:Column id="_IDGenColumn11">
+                <t:label><Label id="_IDGenLabel11" text="Passanger Name"/></t:label>
+                <t:template><Text id="_IDGenText10" text="{Passname}"/></t:template>
+             </t:Column>
+            <t:Column id="_IDGenColumn12">
+                <t:label><Label id="_IDGenLabel12" text="Booking Date"/></t:label>
+                <t:template><Text id="_IDGenText11" text="{ path: 'OrderDate', type:'sap.ui.model.type.Date'}"/></t:template>
+             </t:Column>
+            <t:Column id="_IDGenColumn13">
+                <t:label><Label id="_IDGenLabel13" text="Cancelled"/></t:label>
+                <t:template><Text id="_IDGenText12" text="{Cancelled}"/></t:template>
+             </t:Column>
+            <t:Column id="_IDGenColumn14">
+                <t:label><Label id="_IDGenLabel14" text="Action" /></t:label>
+                <t:template>
+                    <core:Icon id="_IDGenIcon2" press="onCancelBooking" src="sap-icon://sys-cancel" tooltip="Cancel Booking">
+                        <core:customData>
+                            <core:CustomData key="Carrid" value="{Carrid}" />
+                            <core:CustomData key="Bookid" value="{Bookid}" />
+                        </core:customData>
+                    </core:Icon>
+                </t:template>
+            </t:Column>
+        </t:columns>
+    </t:Table>
+
+</mvc:View>
