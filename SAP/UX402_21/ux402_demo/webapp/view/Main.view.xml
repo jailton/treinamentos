@@ -1,0 +1,82 @@
+<mvc:View
+    controllerName="student00.sap.training.ux402demo.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:t="sap.ui.table"
+>
+    <Shell id="shell">
+        <App id="app">
+            <pages>
+                <Page id="page" title="{i18n>title}">
+                    <content>
+                        <!-- Binding: {ModelName>/Collection} ou {ModelName>property}-->
+                        
+                        <Text id="_IDGenText10" text="{JSON_MODEL>/name}, {JSON_MODEL>/age}"/>
+                        <Input id="_IDGenInput1" value="{JSON_MODEL>/name}" valueLiveUpdate="true"/>
+                        <Input id="_IDGenInput2" value="{JSON_MODEL>/age}" valueLiveUpdate="true"/>
+
+
+                        <t:Table id="_IDGenTable1" 
+                                rows="{GWSAMPLE_BASIC>/ProductSet}" 
+                                title="Product List"
+                                rowSelectionChange="onRowSelectionChange"
+                                selectionMode="Single" 
+                                visibleRowCount="5" 
+                                selectionBehavior="Row">
+                            <t:columns>
+                                <t:Column id="_IDGenColumn1">
+                                    <t:label><Label id="_IDGenLabel1" text="ID"/></t:label>
+                                    <t:template><Text id="_IDGenText1" text="{GWSAMPLE_BASIC>ProductID}"/></t:template>
+                                </t:Column>
+                                <t:Column id="_IDGenColumn2">
+                                    <t:label><Label id="_IDGenLabel2" text="Name"/></t:label>
+                                    <t:template><Text id="_IDGenText2" text="{GWSAMPLE_BASIC>Name}"/></t:template>
+                                </t:Column>
+                                <t:Column id="_IDGenColumn3">
+                                    <t:label><Label id="_IDGenLabel3" text="Description"/></t:label>
+                                    <t:template><Text id="_IDGenText3" text="{GWSAMPLE_BASIC>Description}"/></t:template>
+                                </t:Column>
+                                <t:Column id="_IDGenColumn4">
+                                    <t:label><Label id="_IDGenLabel4" text="Price"/></t:label>
+                                    <t:template><Text id="_IDGenText4" text="{GWSAMPLE_BASIC>CurrencyCode} {GWSAMPLE_BASIC>Price}"/></t:template>
+                                </t:Column>
+                            </t:columns>
+                        </t:Table>
+                        
+                        <t:Table id="_IDGenTable2" rows="{UX402_FLIGHT_SRV>/FlightSet}" 
+                                    selectionMode="Single" 
+                                    visibleRowCount="5" 
+                                    selectionBehavior="Row"
+                                    title="Flights">
+                                <t:columns>
+                                    <t:Column id="_IDGenColumn5">
+                                        <t:label><Label id="_IDGenLabel5" text="Carrier"/></t:label>
+                                        <t:template><Text id="_IDGenText5" text="{UX402_FLIGHT_SRV>Carrid}"/></t:template>
+                                    </t:Column>
+                                    <t:Column id="_IDGenColumn6">
+                                        <t:label><Label id="_IDGenLabel6" text="Flight Number"/></t:label>
+                                        <t:template><Text id="_IDGenText9"  text="{UX402_FLIGHT_SRV>Connid}"/></t:template>
+                                    </t:Column>
+                                    <t:Column id="_IDGenColumn7" >
+                                        <t:label><Label id="_IDGenLabel7" text="Flight Date"/></t:label>
+                                        <t:template>
+                                            <Text id="_IDGenText6" text="{path: 'UX402_FLIGHT_SRV>Fldate', type: 'sap.ui.model.type.Date'}"/>
+                                        </t:template>
+                                    </t:Column>
+                                    <t:Column id="_IDGenColumn8" >
+                                        <t:label><Label id="_IDGenLabel8" text="Number of Seats"/></t:label>
+                                        <t:template><Text id="_IDGenText7" text="{UX402_FLIGHT_SRV>Seatsmax}"/></t:template>
+                                    </t:Column>
+                                    <t:Column id="_IDGenColumn9" >
+                                        <t:label><Label id="_IDGenLabel9" text="Number of occupied seats"/></t:label>
+                                        <t:template><Text id="_IDGenText8" text="{UX402_FLIGHT_SRV>Seatsocc}"/></t:template>
+                                    </t:Column>
+                                </t:columns>
+                        </t:Table>                    
+                    </content>
+                </Page>
+            </pages>
+        </App>
+    </Shell>
+</mvc:View>
