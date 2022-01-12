@@ -1,0 +1,38 @@
+<mvc:View
+    controllerName="student00.sap.training.ux402aggregation.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+>
+    <Shell id="shell">
+        <App id="app">
+            <pages>
+                <Page id="page" title="{i18n>title}">
+                    <content>
+                        <ComboBox id="combobox" items="{JSON>/Customers}" selectionChange="onSelectionChange">
+                            <items>
+                                <core:Item id="_IDGenListItem1" key="{JSON>Id}" text="{JSON>Id}"/>
+                            </items>
+                        </ComboBox>
+                        <f:SimpleForm id="simpleform" minWidth="1024" maxContainerCols="2" editable="true"
+                                    layout="ResponsiveGridLayout" labelSpanL="4" labelSpanM="4" emptySpanL="0"
+                                    columnsL="2" columnsM="2" class="editableForm">
+                                <f:content>
+                                    <Label id="_IDGenLabel1" text="Company"/>
+                                    <Input id="_IDGenInput1" value="{JSON>CompanyName}"/>
+
+                                    <Label id="_IDGenLabel2" text="Name"/>
+                                    <Input id="_IDGenInput2" value="{JSON>ContactName}"/>
+
+                                    <Label id="_IDGenLabel3" text="Title"/>
+                                    <Input id="_IDGenInput3" value="{JSON>ContactTitle}"/>
+                                </f:content>
+                        </f:SimpleForm>
+                    </content>
+                </Page>
+            </pages>
+        </App>
+    </Shell>
+</mvc:View>

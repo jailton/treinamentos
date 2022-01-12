@@ -1,0 +1,23 @@
+{
+    "Customers": [{
+        "Id":"0001",
+        "CompanyName": "ACME",
+        "ContactName": "Maria",
+        "ContactTitle": "Vendedora"
+    }, {
+        "Id":"0002",
+        "CompanyName": "XPTO",
+        "ContactName": "José",
+        "ContactTitle": "Auxiliar"
+    }, {
+        "Id":"0003",
+        "CompanyName": "ABCD",
+        "ContactName": "João",
+        "ContactTitle": "Dono"
+    }, {
+        "Id":"0004",
+        "CompanyName": "QWERTY",
+        "ContactName": "Volnei",
+        "ContactTitle": "Zelador"
+    }]
+}

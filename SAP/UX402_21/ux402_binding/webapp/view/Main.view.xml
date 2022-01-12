@@ -1,0 +1,55 @@
+<mvc:View
+    controllerName="student00.sap.training.ux402binding.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:t="sap.ui.table"
+>
+    <Shell id="shell">
+        <App id="app">
+            <pages>
+                <Page id="page" title="{i18n>title}">
+                    <content>
+                        <t:Table id="_IDGenTable3" rows="{ path: 'RMTSAMPLEFLIGHT_2>/FlightCollection', sorter:[{path: 'FlightDate', descending: true}]}" 
+                                selectionMode="Single" 
+                                visibleRowCount="5" 
+                                selectionBehavior="Row"
+                                title="Flight Collection">
+                                <t:columns>
+                                    <t:Column id="_IDGenColumn10">
+                                        <t:label><Label id="_IDGenLabel10" text="AirLineID"/></t:label>
+                                        <t:template><Text id="_IDGenText11" text="{RMTSAMPLEFLIGHT_2>AirLineID}"/></t:template>
+                                    </t:Column>
+                                    <t:Column id="_IDGenColumn11">
+                                        <t:label><Label id="_IDGenLabel11" text="FlightConnectionID"/></t:label>
+                                        <t:template><Text id="_IDGenText12" text="{RMTSAMPLEFLIGHT_2>FlightConnectionID}"/></t:template>
+                                    </t:Column>
+                                    <t:Column id="_IDGenColumn12">
+                                        <t:label><Label id="_IDGenLabel12" text="FlightDate"/></t:label>
+                                        <t:template>
+                                            <Text id="_IDGenText13" text="{ 
+                                                        path: 'RMTSAMPLEFLIGHT_2>FlightDate',
+                                                        type: 'sap.ui.model.type.Date'
+                                                    }"/>
+                                        </t:template>
+                                    </t:Column>
+                                    <t:Column id="_IDGenColumn13">
+                                        <t:label><Label id="_IDGenLabel13" text="AirCraftType"/></t:label>
+                                        <t:template><Text id="_IDGenText14" text="{RMTSAMPLEFLIGHT_2>AirCraftType}"/></t:template>
+                                    </t:Column>
+                                    <t:Column id="_IDGenColumn14">
+                                        <t:label><Label id="_IDGenLabel14" text="DepartureCity"/></t:label>
+                                        <t:template><Text id="_IDGenText1" text="{= ${RMTSAMPLEFLIGHT_2>FlightDetails/DepartureCity}.toUpperCase() }"/></t:template>
+                                    </t:Column>
+                                    <t:Column id="_IDGenColumn15">
+                                        <t:label><Label id="_IDGenLabel15" text="DestinationCity"/></t:label>
+                                        <t:template><Text id="_IDGenText2" text="{RMTSAMPLEFLIGHT_2>FlightDetails/DestinationCity}"/></t:template>
+                                    </t:Column>
+                                </t:columns>
+                        </t:Table>
+                    </content>
+                </Page>
+            </pages>
+        </App>
+    </Shell>
+</mvc:View>
