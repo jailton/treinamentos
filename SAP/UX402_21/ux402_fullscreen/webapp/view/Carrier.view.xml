@@ -1,0 +1,26 @@
+<mvc:View controllerName="student00.sap.training.ux402fullscreen.controller.Carrier"
+        xmlns:mvc="sap.ui.core.mvc" 
+        xmlns="sap.m">
+    <Page id="_IDGenPage1" title="{i18n>overviewPageTitle}">
+        <content>
+            <Table id="_IDGenTable1" items="{/CarrierCollection}">
+                <columns>
+                    <Column id="_IDGenColumn1">
+                        <Text id="_IDGenText1" text="{i18n>columnId}" />
+                    </Column>
+                    <Column id="_IDGenColumn2">
+                        <Text id="_IDGenText2" text="{i18n>columnName}" />
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem id="_IDGenColumnListItem1">
+                        <cells>
+                            <ObjectIdentifier id="_IDGenObjectIdentifier1" title="{AirLineID}"/>
+                            <Text id="_IDGenText3" text="{AirLineName}" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+    </Page>
+</mvc:View>
