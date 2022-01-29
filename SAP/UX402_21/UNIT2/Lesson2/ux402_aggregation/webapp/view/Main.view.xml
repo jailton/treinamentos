@@ -25,6 +25,9 @@
 
                                     <Label id="_IDGenLabel2" text="Name"/>
                                     <Input id="_IDGenInput2" value="{JSON>ContactName}"/>
+
+                                    <Label id="_IDGenLabel3" text="Title"/>
+                                    <Input id="_IDGenInput3" value="{JSON>ContactTitle}"/>
                                 </f:content>
                         </f:SimpleForm>
                     </content>
